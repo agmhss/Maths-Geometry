@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>வடிவியல் உலகம் - AGMHSS</title>
+    <style>
+        :root {
+            --primary: #4834d4;
+            --secondary: #686de0;
+            --success: #2ecc71;
+            --accent: #f0932b;
+            --bg: #f5f6fa;
+            --dark: #2f3640;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            background: #fff;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            margin: 0 10px;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .content-section {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .content-section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Formula Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--accent);
+        }
+
+        .formula-box {
+            background: #fff9f0;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px dashed var(--accent);
+            font-weight: bold;
+        }
+
+        /* Game Box */
+        .game-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .shape-preview {
+            width: 120px;
+            height: 120px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ddd;
+            background: #f9f9f9;
+        }
+
+        input[type="number"] {
+            padding: 12px;
+            width: 120px;
+            font-size: 1.2em;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            transition: 0.3s;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-success { background: var(--success); color: white; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td { padding: 15px; border-bottom: 1px solid #eee; text-align: left; }
+        th { background: var(--primary); color: white; }
+
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>வடிவியல் உலகம் 📐</h1>
+    <p>AGMHSS Patteeswaram - மாணவர்களுக்கான டிஜிட்டல் கற்றல் தளம்</p>
+</div>
+
+<div class="nav-tabs">
+    <button class="tab-btn active" onclick="openTab('learn')">கற்றல் முறை</button>
+    <button class="tab-btn" onclick="openTab('angles')">கோணங்கள்</button>
+    <button class="tab-btn" onclick="openTab('game')">விளையாட்டுப் பயிற்சி</button>
+</div>
+
+<div id="learn" class="content-section active">
+    <h2>வடிவங்களும் சூத்திரங்களும்</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>சதுரம் (Square)</h3>
+            <p>நான்கு பக்கங்களும் சமம்.</p>
+            <div class="formula-box">சுற்றளவு = 4a</div>
+            <div class="formula-box">பரப்பளவு = a²</div>
+        </div>
+        <div class="card">
+            <h3>செவ்வகம் (Rectangle)</h3>
+            <p>எதிர் பக்கங்கள் சமம்.</p>
+            <div class="formula-box">சுற்றளவு = 2(l + w)</div>
+            <div class="formula-box">பரப்பளவு = l × w</div>
+        </div>
+        <div class="card">
+            <h3>வட்டம் (Circle)</h3>
+            <p>மையத்திலிருந்து சமதூரம்.</p>
+            <div class="formula-box">சுற்றளவு = 2πr</div>
+            <div class="formula-box">பரப்பளவு = πr²</div>
+        </div>
+    </div>
+</div>
+
+<div id="angles" class="content-section">
+    <h2>கோணங்களின் வகைகள்</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>கோணம்</th>
+                <th>விளக்கம்</th>
+                <th>அளவு</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>குறுங்கோணம்</td>
+                <td>90° விடக் குறைவானது</td>
+                <td>0° < θ < 90°</td>
+            </tr>
+            <tr>
+                <td>செங்கோணம்</td>
+                <td>சரியாக 90 டிகிரி</td>
+                <td>θ = 90°</td>
+            </tr>
+            <tr>
+                <td>விரிகோணம்</td>
+                <td>90° முதல் 180° வரை</td>
+                <td>90° < θ < 180°</td>
+            </tr>
+            <tr>
+                <td>நேர்க்கோணம்</td>
+                <td>சரியான நேர்க்கோடு</td>
+                <td>θ = 180°</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="game" class="content-section">
+    <div class="game-container">
+        <div id="start-screen">
+            <h2>வடிவியல் சவால்! ⚡</h2>
+            <p>30 விநாடிகளில் எத்தனை கணக்குகளுக்கு விடையளிக்க முடியும்?</p>
+            <button class="btn btn-success" onclick="initGame()">தொடங்கு</button>
+        </div>
+
+        <div id="game-play" style="display:none;">
+            <div style="font-size: 1.2em; margin-bottom: 20px;">
+                நேரம்: <span id="timer" style="color:red">30</span>s | மதிப்பெண்: <span id="score">0</span>
+            </div>
+            <h3 id="target-task">பரப்பளவு என்ன?</h3>
+            <div id="shape-draw" class="shape-preview"></div>
+            <p id="shape-dims"></p>
+            <input type="number" id="gameInput" placeholder="?"> <br>
+            <button class="btn btn-primary" onclick="checkGameAnswer()">சரிபார்</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Tab Logic
+    function openTab(tabId) {
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // Game Logic
+    let gameScore = 0;
+    let gameTime = 30;
+    let gameTimer;
+    let correctValue;
+
+    function initGame() {
+        document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('game-play').style.display = 'block';
+        gameScore = 0;
+        gameTime = 30;
+        document.getElementById('score').textContent = "0";
+        newQuestion();
+        gameTimer = setInterval(() => {
+            gameTime--;
+            document.getElementById('timer').textContent = gameTime;
+            if(gameTime <= 0) {
+                clearInterval(gameTimer);
+                alert("முடிந்தது! உங்கள் மதிப்பெண்: " + gameScore);
+                document.getElementById('start-screen').style.display = 'block';
+                document.getElementById('game-play').style.display = 'none';
+            }
+        }, 1000);
+    }
+
+    function newQuestion() {
+        const isSquare = Math.random() > 0.5;
+        const isArea = Math.random() > 0.5;
+        const draw = document.getElementById('shape-draw');
+        const dims = document.getElementById('shape-dims');
+        const task = document.getElementById('target-task');
+
+        if(isSquare) {
+            let a = Math.floor(Math.random() * 8) + 2;
+            draw.style.width = "60px"; draw.style.height = "60px";
+            draw.style.background = "#ff7675"; draw.style.borderRadius = "0";
+            dims.textContent = "பக்கம் (a) = " + a;
+            task.textContent = isArea ? "பரப்பளவு (Area) என்ன?" : "சுற்றளவு (Perimeter) என்ன?";
+            correctValue = isArea ? a * a : 4 * a;
+        } else {
+            let l = Math.floor(Math.random() * 8) + 4;
+            let w = Math.floor(Math.random() * 3) + 2;
+            draw.style.width = "90px"; draw.style.height = "50px";
+            draw.style.background = "#74b9ff"; draw.style.borderRadius = "0";
+            dims.textContent = `நீளம் (l)=${l}, அகலம் (w)=${w}`;
+            task.textContent = isArea ? "பரப்பளவு (Area) என்ன?" : "சுற்றளவு (Perimeter) என்ன?";
+            correctValue = isArea ? l * w : 2 * (l + w);
+        }
+        document.getElementById('gameInput').value = "";
+        document.getElementById('gameInput').focus();
+    }
+
+    function checkGameAnswer() {
+        let userVal = parseInt(document.getElementById('gameInput').value);
+        if(userVal === correctValue) {
+            gameScore += 10;
+            document.getElementById('score').textContent = gameScore;
+            newQuestion();
+        } else {
+            alert("தவறான விடை, மீண்டும் முயற்சி செய்!");
+        }
+    }
+</script>
+
+</body>
+</html>
