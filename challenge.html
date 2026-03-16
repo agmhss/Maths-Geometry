@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>வடிவியல் சவால் - AGMHSS</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .challenge-container {
+            background: white;
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .toggle-buttons {
+            margin-bottom: 25px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-tab {
+            padding: 10px 20px;
+            border: 2px solid var(--primary);
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .game-section { display: none; animation: fadeIn 0.4s; }
+        .game-section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Identify Shape Styles */
+        .shape-display {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            border: 3px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .circle { border-radius: 50%; background: #3498db; }
+        .square { background: #e74c3c; width: 120px; height: 120px; }
+        .rectangle { width: 180px; height: 90px; background: #9b59b6; }
+        .triangle { 
+            width: 0; height: 0; 
+            border-left: 75px solid transparent;
+            border-right: 75px solid transparent;
+            border-bottom: 130px solid #f1c40f;
+            border-top: none;
+            background: transparent !important;
+            border-width: 0 75px 130px 75px;
+        }
+
+        /* Common Quiz Styles */
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: 0.2s;
+        }
+
+        .option-btn:hover { background: #f0f0f0; border-color: var(--accent); }
+
+        .feedback { margin-top: 15px; font-weight: bold; min-height: 24px; }
+        .correct { color: var(--success); }
+        .wrong { color: #e74c3c; }
+
+        .next-btn {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="challenge-container">
+    <div class="toggle-buttons">
+        <button id="btnID" class="btn-tab active" onclick="switchGame('identify')">அடையாளம் காண்</button>
+        <button id="btnQuiz" class="btn-tab" onclick="switchGame('quiz')">வினாடி வினா</button>
+    </div>
+
+    <div id="identify" class="game-section active">
+        <h3>இது என்ன வடிவம்?</h3>
+        <div id="targetShape" class="shape-display circle"></div>
+        <div id="idOptions">
+            </div>
+        <div id="idFeedback" class="feedback"></div>
+        <button class="next-btn" onclick="nextShape()">அடுத்த கேள்வி</button>
+    </div>
+
+    <div id="quiz" class="game-section">
+        <h3>கணித வினாடி வினா</h3>
+        <p id="qText" style="font-size: 1.2em; font-weight: 500;"></p>
+        <div id="qOptions"></div>
+        <div id="qFeedback" class="feedback"></div>
+    </div>
+</div>
+
+<script>
+    // Game Switching
+    function switchGame(type) {
+        document.querySelectorAll('.game-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active'));
+        document.getElementById(type).classList.add('active');
+        if(type === 'identify') {
+            document.getElementById('btnID').classList.add('active');
+            nextShape();
+        } else {
+            document.getElementById('btnQuiz').classList.add('active');
+            loadQuiz();
+        }
+    }
+
+    // Identify Shapes Logic
+    const shapeList = [
+        { name: 'வட்டம்', class: 'circle' },
+        { name: 'சதுரம்', class: 'square' },
+        { name: 'செவ்வகம்', class: 'rectangle' },
+        { name: 'முக்கோணம்', class: 'triangle' }
+    ];
+    let currentShapeObj;
+
+    function nextShape() {
+        currentShapeObj = shapeList[Math.floor(Math.random() * shapeList.length)];
+        const display = document.getElementById('targetShape');
+        display.className = 'shape-display ' + currentShapeObj.class;
+        document.getElementById('idFeedback').textContent = "";
+        
+        const optContainer = document.getElementById('idOptions');
+        optContainer.innerHTML = "";
+        shapeList.forEach(s => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = s.name;
+            btn.onclick = () => {
+                const fb = document.getElementById('idFeedback');
+                if(s.name === currentShapeObj.name) {
+                    fb.textContent = "சரி! 🎉"; fb.className = "feedback correct";
+                } else {
+                    fb.textContent = "தவறு! ❌"; fb.className = "feedback wrong";
+                }
+            };
+            optContainer.appendChild(btn);
+        });
+    }
+
+    // Quiz Logic
+    const quizQuestions = [
+        { q: "90° அளவுள்ள கோணம் எது?", o: ["குறுங்கோணம்", "செங்கோணம்", "விரிகோணம்"], c: "செங்கோணம்" },
+        { q: "வட்டத்தின் பரப்பளவு சூத்திரம்?", o: ["2πr", "πr²", "a²"], c: "πr²" },
+        { q: "நான்கு பக்கங்களும் சமமான வடிவம்?", o: ["செவ்வகம்", "சரிவகம்", "சதுரம்"], c: "சதுரம்" },
+        { q: "முக்கோணத்திற்கு எத்தனை உச்சிகள் (Vertices) உண்டு?", o: ["2", "3", "4"], c: "3" }
+    ];
+    let qIdx = 0;
+
+    function loadQuiz() {
+        const data = quizQuestions[qIdx];
+        document.getElementById('qText').textContent = data.q;
+        document.getElementById('qFeedback').textContent = "";
+        const optDiv = document.getElementById('qOptions');
+        optDiv.innerHTML = "";
+        
+        data.o.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = opt;
+            btn.onclick = () => {
+                const fb = document.getElementById('qFeedback');
+                if(opt === data.c) {
+                    fb.textContent = "அற்புதம்! ✅"; fb.className = "feedback correct";
+                    setTimeout(() => { qIdx = (qIdx + 1) % quizQuestions.length; loadQuiz(); }, 1200);
+                } else {
+                    fb.textContent = "மீண்டும் முயற்சி செய்! ❌"; fb.className = "feedback wrong";
+                }
+            };
+            optDiv.appendChild(btn);
+        });
+    }
+
+    // Start initialization
+    nextShape();
+</script>
+
+</body>
+</html>
